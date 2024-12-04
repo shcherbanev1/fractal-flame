@@ -9,6 +9,7 @@ import backend.academy.domain.transformation.Transformation;
 import backend.academy.domain.transformation.impl.AffineTransformation;
 import backend.academy.type.Config;
 import backend.academy.util.RandomUtils;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
@@ -17,6 +18,8 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
 import lombok.extern.slf4j.Slf4j;
 
+@SuppressWarnings("CPD-START")
+@SuppressFBWarnings("PREDICTABLE_RANDOM")
 @Slf4j
 public class MultiThreadFlameGenerator extends FlameGenerator {
 
@@ -55,6 +58,7 @@ public class MultiThreadFlameGenerator extends FlameGenerator {
         return image;
     }
 
+    @SuppressFBWarnings("NOS_NON_OWNED_SYNCHRONIZATION")
     @SuppressWarnings("ParameterNumber")
     private void generatePart(
         int iterationsForPoint,

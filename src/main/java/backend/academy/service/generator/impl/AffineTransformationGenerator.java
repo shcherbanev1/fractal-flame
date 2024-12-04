@@ -9,15 +9,16 @@ public class AffineTransformationGenerator extends RandomGenerator<AffineTransfo
 
     private final double minCoefficient;
     private final double maxCoefficient;
+    private final Random random;
 
     public AffineTransformationGenerator(double minCoefficient, double maxCoefficient) {
         this.minCoefficient = minCoefficient;
         this.maxCoefficient = maxCoefficient;
+        random = new SecureRandom();
     }
 
     @Override
     protected AffineTransformation generate() {
-        Random random = new SecureRandom();
         double a;
         double b;
         double c;

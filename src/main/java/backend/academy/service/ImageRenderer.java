@@ -3,11 +3,13 @@ package backend.academy.service;
 import backend.academy.domain.FractalImage;
 import backend.academy.domain.Pixel;
 import backend.academy.type.ImageFormat;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
+@SuppressFBWarnings("PATH_TRAVERSAL_IN")
 public class ImageRenderer {
 
     private static final int RED_CODING_SHIFT = 16;

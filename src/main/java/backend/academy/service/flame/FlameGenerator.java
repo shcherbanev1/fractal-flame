@@ -48,7 +48,7 @@ public abstract class FlameGenerator {
     }
 
     protected List<Point> rotate(int symmetricalAmount, Point point) {
-        List<Point> rotatedPoints = new ArrayList<>();
+        List<Point> rotatedPoints = new ArrayList<>(symmetricalAmount);
         double rotateAngle = Math.PI * 2 / symmetricalAmount;
         for (int i = 0; i < symmetricalAmount; i++) {
             double currentAngle = i * rotateAngle;
