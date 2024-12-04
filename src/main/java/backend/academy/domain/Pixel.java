@@ -1,13 +1,15 @@
 package backend.academy.domain;
 
 import lombok.Getter;
+import lombok.Setter;
 
+@Getter
 public class Pixel {
-    @Getter private final int x;
-    @Getter private final int y;
-    private int r;
-    private int g;
-    private int b;
+    private final int x;
+    private final int y;
+    @Setter private int r;
+    @Setter private int g;
+    @Setter private int b;
     private int hitCount;
 
     public Pixel(int x, int y) {
@@ -22,22 +24,17 @@ public class Pixel {
     /*
      * Accumulate color. When required divide by the number of hits
      * */
-    public void addColor(int r, int g, int b) {
-        this.r += r == 0 ? r : r / 2;
-        this.g += g == 0 ? g : g / 2;
-        this.b += b == 0 ? b : b / 2;
+    public void addColor(Color color) {
+        if (hitCount == 0) {
+            r = color.red();
+            g = color.green();
+            b = color.blue();
+        } else {
+            r = (r + color.red()) / 2;
+            g = (g + color.green()) / 2;
+            b = (b + color.blue()) / 2;
+        }
         hitCount++;
     }
 
-    public int r() {
-        return r / hitCount;
-    }
-
-    public int g() {
-        return g / hitCount;
-    }
-
-    public int b() {
-        return b / hitCount;
-    }
 }
