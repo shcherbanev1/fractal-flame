@@ -9,7 +9,6 @@ import backend.academy.domain.transformation.Transformation;
 import backend.academy.domain.transformation.impl.AffineTransformation;
 import backend.academy.type.Config;
 import backend.academy.util.RandomUtils;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
@@ -46,7 +45,7 @@ public class MultiThreadFlameGenerator extends FlameGenerator {
                         world,
                         random);
                     int currentCount = processedPoints.incrementAndGet();
-                    if (currentCount % (config.totalPoints() / 10) == 0) {
+                    if (currentCount % (config.totalPoints() / MILESTONE_FOR_LOG) == 0) {
                         log.trace("Dot - {}", currentCount);
                     }
                 });
@@ -56,6 +55,7 @@ public class MultiThreadFlameGenerator extends FlameGenerator {
         return image;
     }
 
+    @SuppressWarnings("ParameterNumber")
     private void generatePart(
         int iterationsForPoint,
         List<AffineTransformation> affine,

@@ -4,8 +4,8 @@ import backend.academy.domain.transformation.impl.SphereTransformation;
 import backend.academy.domain.transformation.impl.SpiralTransformation;
 import backend.academy.service.flame.FlameGenerator;
 import backend.academy.service.flame.MultiThreadFlameGenerator;
-import backend.academy.type.ImageFormat;
 import backend.academy.type.Config;
+import backend.academy.type.ImageFormat;
 import java.util.List;
 import lombok.experimental.UtilityClass;
 

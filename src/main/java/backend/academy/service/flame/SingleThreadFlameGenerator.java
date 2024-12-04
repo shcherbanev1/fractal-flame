@@ -1,25 +1,28 @@
 package backend.academy.service.flame;
 
-import backend.academy.domain.*;
+import backend.academy.domain.Color;
+import backend.academy.domain.FractalImage;
+import backend.academy.domain.Pixel;
+import backend.academy.domain.Point;
+import backend.academy.domain.Rect;
 import backend.academy.domain.transformation.Transformation;
 import backend.academy.domain.transformation.impl.AffineTransformation;
 import backend.academy.type.Config;
 import backend.academy.util.RandomUtils;
-import lombok.extern.slf4j.Slf4j;
-
 import java.security.SecureRandom;
 import java.util.List;
 import java.util.Random;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class SingleThreadFlameGenerator extends FlameGenerator {
 
     @Override
     public FractalImage generate(
-            List<AffineTransformation> affine,
-            List<Transformation> nonLinear,
-            List<Color> colors,
-            Config config
+        List<AffineTransformation> affine,
+        List<Transformation> nonLinear,
+        List<Color> colors,
+        Config config
     ) {
         FractalImage image = new FractalImage(config.imageWidth(), config.imageHeight());
         Rect world = new Rect(-config.xConstraint(), -config.yConstraint(), config.xConstraint(), config.yConstraint());
@@ -27,30 +30,31 @@ public class SingleThreadFlameGenerator extends FlameGenerator {
 
         for (int i = 0; i < config.totalPoints(); i++) {
             generatePart(
-                    config.iterationsForPoint(),
-                    affine,
-                    nonLinear,
-                    colors,
-                    config,
-                    image,
-                    world,
-                    random);
-            if (i % (config.totalPoints() / 10) == 0) {
+                config.iterationsForPoint(),
+                affine,
+                nonLinear,
+                colors,
+                config,
+                image,
+                world,
+                random);
+            if (i % (config.totalPoints() / MILESTONE_FOR_LOG) == 0) {
                 log.trace("Dot - {}", i);
             }
         }
         return image;
     }
 
+    @SuppressWarnings("ParameterNumber")
     private void generatePart(
-            int iterationsForPoint,
-            List<AffineTransformation> affine,
-            List<Transformation> nonLinear,
-            List<Color> colors,
-            Config config,
-            FractalImage image,
-            Rect world,
-            Random random
+        int iterationsForPoint,
+        List<AffineTransformation> affine,
+        List<Transformation> nonLinear,
+        List<Color> colors,
+        Config config,
+        FractalImage image,
+        Rect world,
+        Random random
     ) {
         Point point = randomPoint(world, random);
 

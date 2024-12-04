@@ -18,7 +18,12 @@ public class AffineTransformationGenerator extends RandomGenerator<AffineTransfo
     @Override
     protected AffineTransformation generate() {
         Random random = new SecureRandom();
-        double a, b, c, d, e, f;
+        double a;
+        double b;
+        double c;
+        double d;
+        double e;
+        double f;
         do {
             a = random.nextDouble(minCoefficient, maxCoefficient);
             b = random.nextDouble(minCoefficient, maxCoefficient);

@@ -2,7 +2,9 @@ package backend.academy.util;
 
 import java.util.List;
 import java.util.Random;
+import lombok.experimental.UtilityClass;
 
+@UtilityClass
 public class RandomUtils {
 
     public static <T> T getRandomElement(List<T> list, Random random) {

@@ -10,6 +10,9 @@ import javax.imageio.ImageIO;
 
 public class ImageRenderer {
 
+    private static final int RED_CODING_SHIFT = 16;
+    private static final int GREEN_CODING_SHIFT = 8;
+
     public void renderPixels(FractalImage fractalImage, String outputPath, ImageFormat format) throws IOException {
 
         Pixel[][] pixels = fractalImage.pixels();
@@ -24,7 +27,7 @@ public class ImageRenderer {
                 int r = pixel.r();
                 int g = pixel.g();
                 int b = pixel.b();
-                int rgb = (r << 16) | (g << 8) | b;
+                int rgb = (r << RED_CODING_SHIFT) | (g << GREEN_CODING_SHIFT) | b;
                 image.setRGB(x, y, rgb);
             }
         }

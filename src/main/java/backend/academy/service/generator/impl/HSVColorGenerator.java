@@ -3,6 +3,7 @@ package backend.academy.service.generator.impl;
 import backend.academy.domain.Color;
 import backend.academy.service.generator.RandomGenerator;
 
+@SuppressWarnings("MagicNumber")
 public class HSVColorGenerator extends RandomGenerator<Color> {
 
     @Override
@@ -18,7 +19,9 @@ public class HSVColorGenerator extends RandomGenerator<Color> {
         double x = c * (1 - Math.abs((hue / 60.0) % 2 - 1));
         double m = value - c;
 
-        double rPrime, gPrime, bPrime;
+        double rPrime;
+        double gPrime;
+        double bPrime;
 
         if (hue < 60) {
             rPrime = c;
