@@ -3,12 +3,10 @@ package backend.academy.service.flame;
 import backend.academy.domain.Color;
 import backend.academy.domain.FractalImage;
 import backend.academy.domain.Pixel;
-import backend.academy.domain.Point;
 import backend.academy.domain.Rect;
 import backend.academy.domain.transformation.Transformation;
 import backend.academy.domain.transformation.impl.AffineTransformation;
 import backend.academy.type.Config;
-import backend.academy.util.RandomUtils;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.List;
 import java.util.Random;
@@ -58,35 +56,12 @@ public class MultiThreadFlameGenerator extends FlameGenerator {
         return image;
     }
 
+    @Override
     @SuppressFBWarnings("NOS_NON_OWNED_SYNCHRONIZATION")
-    @SuppressWarnings("ParameterNumber")
-    private void generatePart(
-        int iterationsForPoint,
-        List<AffineTransformation> affine,
-        List<Transformation> nonLinear,
-        List<Color> colors,
-        Config config,
-        FractalImage image,
-        Rect world,
-        Random random
-    ) {
-        Point point = randomPoint(world, random);
-
-        for (int i = SKIP_STEPS; i < iterationsForPoint; i++) {
-            int affineIndex = RandomUtils.getRandomIndex(affine, random);
-            point = transformPoint(point, affine, nonLinear, random, affineIndex);
-            Color color = getColorForAffineIndex(colors, affine, affineIndex);
-
-            List<Point> rotatedPoints = rotate(config.symmetricAmount(), point);
-            for (Point rotatedPoint : rotatedPoints) {
-                if (i > 0 && world.contains(rotatedPoint)) {
-                    Pixel pixel = world.mapPointToPixel(image, rotatedPoint);
-                    synchronized (pixel) {
-                        if (pixel.x() <= config.imageWidth() && pixel.y() <= config.imageHeight()) {
-                            pixel.addColor(color);
-                        }
-                    }
-                }
+    void addPixelColor(Pixel pixel, Color color, Config config) {
+        synchronized (pixel) {
+            if (pixel.x() <= config.imageWidth() && pixel.y() <= config.imageHeight()) {
+                pixel.addColor(color);
             }
         }
     }

@@ -2,12 +2,14 @@ package backend.academy.service.flame;
 
 import backend.academy.domain.Color;
 import backend.academy.domain.FractalImage;
+import backend.academy.domain.Pixel;
 import backend.academy.domain.Point;
 import backend.academy.domain.Rect;
 import backend.academy.domain.transformation.Transformation;
 import backend.academy.domain.transformation.impl.AffineTransformation;
 import backend.academy.type.Config;
 import backend.academy.util.RandomUtils;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -24,6 +26,34 @@ public abstract class FlameGenerator {
         Config config
     );
 
+    @SuppressFBWarnings("NOS_NON_OWNED_SYNCHRONIZATION")
+    @SuppressWarnings("ParameterNumber")
+    protected void generatePart(
+        int iterationsForPoint,
+        List<AffineTransformation> affine,
+        List<Transformation> nonLinear,
+        List<Color> colors,
+        Config config,
+        FractalImage image,
+        Rect world,
+        Random random
+    ) {
+        Point point = randomPoint(world, random);
+        for (int i = SKIP_STEPS; i < iterationsForPoint; i++) {
+            int affineIndex = RandomUtils.getRandomIndex(affine, random);
+            point = transformPoint(point, affine, nonLinear, random, affineIndex);
+            Color color = getColorForAffineIndex(colors, affine, affineIndex);
+
+            List<Point> rotatedPoints = rotate(config.symmetricAmount(), point);
+            for (Point rotatedPoint : rotatedPoints) {
+                if (i > 0 && world.contains(rotatedPoint)) {
+                    Pixel pixel = world.mapPointToPixel(image, rotatedPoint);
+                    addPixelColor(pixel, color, config);
+                }
+            }
+        }
+    }
+
     protected Point transformPoint(
         Point point,
         List<AffineTransformation> affine,
@@ -37,6 +67,8 @@ public abstract class FlameGenerator {
         Transformation nonLinearTransformation = RandomUtils.getRandomElement(nonLinear, random);
         return nonLinearTransformation.transform(newPoint);
     }
+
+    abstract void addPixelColor(Pixel pixel, Color color, Config config);
 
     protected Color getColorForAffineIndex(List<Color> colors, List<AffineTransformation> affine, int affineIndex) {
         int colorIndex = (int) ((double) colors.size() / affine.size() * affineIndex);
