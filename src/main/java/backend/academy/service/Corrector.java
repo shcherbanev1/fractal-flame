@@ -27,12 +27,12 @@ public class Corrector {
         for (int row = 0; row < width; row++) {
             for (int col = 0; col < height; col++) {
                 normal[row][col] /= max;
-                int r = (int) (pixels[row][col].r() * Math.pow(normal[row][col], (1.0 / GAMMA)));
-                int g = (int) (pixels[row][col].g() * Math.pow(normal[row][col], (1.0 / GAMMA)));
-                int b = (int) (pixels[row][col].b() * Math.pow(normal[row][col], (1.0 / GAMMA)));
-                pixels[row][col].r(r);
-                pixels[row][col].g(g);
-                pixels[row][col].b(b);
+                int r = (int) (pixels[row][col].color().red() * Math.pow(normal[row][col], (1.0 / GAMMA)));
+                int g = (int) (pixels[row][col].color().green() * Math.pow(normal[row][col], (1.0 / GAMMA)));
+                int b = (int) (pixels[row][col].color().blue() * Math.pow(normal[row][col], (1.0 / GAMMA)));
+                pixels[row][col].color().red(r);
+                pixels[row][col].color().green(g);
+                pixels[row][col].color().blue(b);
             }
         }
     }

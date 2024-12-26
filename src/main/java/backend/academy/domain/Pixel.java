@@ -1,38 +1,33 @@
 package backend.academy.domain;
 
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 public class Pixel {
     private final int x;
     private final int y;
-    @Setter private int r;
-    @Setter private int g;
-    @Setter private int b;
+    private final Color color;
     private int hitCount;
 
     public Pixel(int x, int y) {
         this.x = x;
         this.y = y;
-        r = 0;
-        g = 0;
-        b = 0;
+        this.color = new Color(0, 0, 0);
         hitCount = 0;
     }
 
     /*
      * Accumulate color. When required divide by the number of hits
      * */
-    public void addColor(Color color) {
+    public void addColor(Color addingColor) {
         if (hitCount == 0) {
-            r = color.red();
-            g = color.green();
-            b = color.blue();
+            color.red(addingColor.red());
+            color.green(addingColor.green());
+            color.blue(addingColor.blue());
         } else {
-            r = (r + color.red()) / 2;
-            g = (g + color.green()) / 2;
-            b = (b + color.blue()) / 2;
+            color.red((color.red() + addingColor.red()) / 2);
+            color.green((color.green() + addingColor.green()) / 2);
+            color.blue((color.blue() + addingColor.blue()) / 2);
         }
         hitCount++;
     }

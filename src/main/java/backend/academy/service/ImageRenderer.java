@@ -26,9 +26,9 @@ public class ImageRenderer {
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 Pixel pixel = pixels[x][y];
-                int r = pixel.r();
-                int g = pixel.g();
-                int b = pixel.b();
+                int r = pixel.color().red();
+                int g = pixel.color().green();
+                int b = pixel.color().blue();
                 int rgb = (r << RED_CODING_SHIFT) | (g << GREEN_CODING_SHIFT) | b;
                 image.setRGB(x, y, rgb);
             }

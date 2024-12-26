@@ -1,8 +1,16 @@
 package backend.academy.domain;
 
-public record Color(
-    int red,
-    int green,
-    int blue
-) {
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+@AllArgsConstructor
+@Getter
+@Setter
+public class Color {
+
+    private int red;
+    private int green;
+    private int blue;
+
 }
