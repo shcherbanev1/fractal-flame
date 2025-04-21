@@ -15,7 +15,7 @@ public class Main {
     public static void main(String[] args) {
         FlameGenerator generator = new MultiThreadFlameGenerator();
         Config config = new Config(1000,
-            1_000_000,
+            1_00_000,
             3,
             7920,
             4320,
